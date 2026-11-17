@@ -1,0 +1,22 @@
+# Despliegue de la aplicación web en Render (Blueprint).
+# Render lee este archivo al crear el servicio desde el repositorio de GitHub.
+services:
+  - type: web
+    name: pib-red-neuronal
+    runtime: python
+    plan: free
+    rootDir: webapp
+    buildCommand: pip install -r requirements.txt
+    # timeout alto: si el endpoint de Databricks estaba dormido, el primer llamado tarda
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 150
+    healthCheckPath: /salud
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      # Camino A: Render te pedirá estos valores al crear el servicio (no van en el repositorio)
+      - key: DATABRICKS_HOST
+        sync: false
+      - key: DATABRICKS_TOKEN
+        sync: false
+      - key: DATABRICKS_ENDPOINT
+        value: red-neuronal-pib

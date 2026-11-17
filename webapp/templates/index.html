@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predicción del PIB de Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+<body>
+
+{% if es_prueba or not fuente %}
+<div class="aviso-modo" role="status">
+  {% if fuente %}Modo de prueba: no hay servicio en la nube configurado y la predicción sale del modelo guardado en este computador.
+  {% else %}No hay ninguna red neuronal configurada. Revisa las variables DATABRICKS_* (GUIA.md).{% endif %}
+</div>
+{% endif %}
+
+<header class="cabecera">
+  <h1>Predicción del PIB de Colombia</h1>
+  <p>Escribe cuánto variaron en un año el consumo, la inversión y el comercio exterior.
+     Una red neuronal entrenada en la nube con los datos del DANE de 2001 a 2011 calcula cuánto varió el PIB.</p>
+</header>
+
+<main class="rejilla">
+  <form id="formulario" class="formulario" novalidate>
+    <label class="cargar">
+      <span>Partir de los datos de un año</span>
+      <select id="anio">
+        <option value="">Escenario propio (campos vacíos)</option>
+        {% for f in historia %}<option value="{{ f.anio }}">{{ f.anio }}</option>{% endfor %}
+      </select>
+    </label>
+
+    {% for titulo, campos in grupos %}
+    <fieldset>
+      <legend>{{ titulo }}</legend>
+      {% for k in campos %}
+      <div class="campo" data-campo="{{ k }}">
+        <label for="{{ k }}">{{ etiquetas[k] }}</label>
+        <div class="entrada">
+          <input id="{{ k }}" name="{{ k }}" inputmode="decimal" autocomplete="off" required>
+          <span aria-hidden="true">%</span>
+        </div>
+        <small class="rango"></small>
+        <small class="error" role="alert"></small>
+      </div>
+      {% endfor %}
+    </fieldset>
+    {% endfor %}
+
+    <button type="submit" id="boton">Predecir el PIB</button>
+    <p class="error-general" role="alert" id="error-general"></p>
+  </form>
+
+  <section class="resultado" aria-live="polite">
+    <h2>Variación anual del PIB</h2>
+    <p class="cifra" id="cifra">—</p>
+    <p class="detalle" id="detalle">Completa los ocho campos o carga un año y pulsa «Predecir el PIB».</p>
+    <ul class="notas" id="notas"></ul>
+    <figure class="grafica">
+      <svg id="grafica" viewBox="0 0 520 260" role="img" aria-label="Variación del PIB 2001 a 2011 y la predicción"></svg>
+      <figcaption><span class="muestra real"></span>PIB real, DANE <span class="muestra pred"></span>Predicción</figcaption>
+    </figure>
+    <p class="fuente" id="fuente"></p>
+  </section>
+</main>
+
+<script id="historia" type="application/json">{{ historia | tojson }}</script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

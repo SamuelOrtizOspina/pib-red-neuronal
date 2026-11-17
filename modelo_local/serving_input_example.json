@@ -1,0 +1,26 @@
+{
+  "dataframe_split": {
+    "columns": [
+      "importaciones",
+      "consumo_total",
+      "consumo_hogares",
+      "consumo_gobierno",
+      "formacion_bruta_capital",
+      "formacion_bruta_capital_fijo",
+      "demanda_final_interna",
+      "exportaciones"
+    ],
+    "data": [
+      [
+        19.697707,
+        9.759282,
+        9.963245,
+        8.919289,
+        16.570086,
+        18.042357,
+        10.765375,
+        4.712547
+      ]
+    ]
+  }
+}

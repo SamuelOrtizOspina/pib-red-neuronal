@@ -1,0 +1,4 @@
+# Para correr la web en tu computador
+-r webapp/requirements.txt
+# Para regenerar el CSV desde el Excel
+xlrd==2.0.2
