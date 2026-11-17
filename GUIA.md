@@ -68,7 +68,7 @@ Dónde ver lo que quedó guardado:
 
 1. **Sube el proyecto a GitHub.** En github.com crea un repositorio nuevo (por ejemplo `pib-red-neuronal`), elige **uploading an existing file** y arrastra:
    - `databricks`, `datos` y `webapp`
-   - `render.yaml`, `requirements.txt`, `GUIA.md` y `GUION_VIDEO.md`
+   - `render.yaml`, `requirements.txt`, `README.md` y `GUIA.md`
 
    **No subas `.venv`.**
 2. En https://render.com entra con tu cuenta de GitHub. Elige **New → Blueprint** y selecciona el repositorio.
@@ -108,4 +108,4 @@ DATABRICKS_ENDPOINT=red-neuronal-pib
 | `databricks/entrenar_red_pib.py` | El cuaderno que entrena la red |
 | `webapp/` | La página web (Flask) |
 | `render.yaml` | La configuración para Render |
-| `GUION_VIDEO.md` | Qué decir y mostrar en el video |
+

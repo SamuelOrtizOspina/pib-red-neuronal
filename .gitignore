@@ -2,3 +2,4 @@
 __pycache__/
 webapp/.env
 mlruns/
+GUION_VIDEO.md
